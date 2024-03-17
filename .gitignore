@@ -361,3 +361,15 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Assets/GreenFish.prefab
+/Assets/PinkFish.prefab
+/Assets/Swimming.unity
+/Assets/Models
+/Assets/Scenes
+/.vsconfig
+/Assembly-CSharp.csproj
+/Library
+/ProjectSettings
+/Temp
+/UnityAI-Crowd-Fish.sln
+/UserSettings
