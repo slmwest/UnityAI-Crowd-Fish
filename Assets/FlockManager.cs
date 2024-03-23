@@ -55,9 +55,9 @@ public class FlockManager : MonoBehaviour
         // Update the goal position of the flock with a certain probability
         if (Random.Range(0, changeGoalPosRate) <= 1)
         {
-            goalPos = this.transform.position + new Vector3(Random.Range(-swimLimits.x, swimLimits.x),
-                                                                Random.Range(-swimLimits.y, swimLimits.y),
-                                                                Random.Range(-swimLimits.z, swimLimits.z));
+            goalPos = new Vector3(Random.Range(-swimLimits.x, swimLimits.x),
+                                Random.Range(-swimLimits.y, swimLimits.y),
+                                Random.Range(-swimLimits.z, swimLimits.z));
         }
     }
 }
