@@ -65,7 +65,7 @@ public class Flock : MonoBehaviour
                 gSpeed = gSpeed / groupSize;
 
                 // set local speed to the average speed of the group but capped to FM max speed
-                speed = gSpeed > FlockManager.FM.maxSpeed ? FlockManager.FM.maxSpeed : gSpeed;
+                speed = Mathf.Clamp(gSpeed, FlockManager.FM.minSpeed, FlockManager.FM.maxSpeed);
 
                 // calculate the direction to move towards the center of the group
                 Vector3 direction = (vcentre + vavoid) - this.transform.position;
