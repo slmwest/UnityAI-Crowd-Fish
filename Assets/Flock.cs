@@ -19,8 +19,12 @@ public class Flock : MonoBehaviour
         {
             speed = Random.Range(FlockManager.FM.minSpeed, FlockManager.FM.maxSpeed);
         }
-
-        ApplyFlockRules();
+        
+        // Apply flocking rules with a certain probability to reduce load
+        if (Random.Range(0, 100) <= 10)
+        {
+            ApplyFlockRules();
+        }
         this.transform.Translate(0, 0, speed * Time.deltaTime);
     }
 
