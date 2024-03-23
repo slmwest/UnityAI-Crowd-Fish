@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class FlockManager : MonoBehaviour
 {
-
+    public static FlockManager FM; // Singleton instance of FlockManager
     public GameObject fishPrefab;
     public int numFish = 20;
     public GameObject[] allFish;
     public Vector3 swimLimits = new Vector3(5, 5, 5);
+
+    [Header("Fish Settings")]
+    [Range(0.0f, 5.0f)]
+    public float minSpeed;
+    [Range(0.0f, 5.0f)]
+    public float maxSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +30,9 @@ public class FlockManager : MonoBehaviour
             allFish[i] = Instantiate(fishPrefab, pos, Quaternion.identity);
 
         }
+
+        // Set the FlockManager instance to this object
+        FM = this;
     }
 
     // Update is called once per frame
