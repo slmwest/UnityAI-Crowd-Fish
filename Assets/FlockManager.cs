@@ -10,6 +10,8 @@ public class FlockManager : MonoBehaviour
     public GameObject[] allFish;
     public Vector3 swimLimits = new Vector3(5, 5, 5);
 
+    public Vector3 goalPos;
+
     [Header("Fish Settings")]
     [Range(0.0f, 5.0f)]
     public float minSpeed;
@@ -21,6 +23,11 @@ public class FlockManager : MonoBehaviour
     public float rotationSpeed;
     [Range(0.5f, 2.0f)]
     public float avoidDistance;
+
+    [Range(1, 1000)]
+    public float changeGoalPosRate;
+    [Range(1, 50)]
+    public float changeSpeedRate;
 
     // Start is called before the first frame update
     void Start()
@@ -39,11 +46,18 @@ public class FlockManager : MonoBehaviour
 
         // Set the FlockManager instance to this object
         FM = this;
+        goalPos = this.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // Update the goal position of the flock with a certain probability
+        if (Random.Range(0, changeGoalPosRate) <= 1)
+        {
+            goalPos = this.transform.position + new Vector3(Random.Range(-swimLimits.x, swimLimits.x),
+                                                                Random.Range(-swimLimits.y, swimLimits.y),
+                                                                Random.Range(-swimLimits.z, swimLimits.z));
+        }
     }
 }

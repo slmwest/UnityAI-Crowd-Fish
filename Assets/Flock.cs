@@ -15,6 +15,11 @@ public class Flock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Random.Range(0, FlockManager.FM.changeSpeedRate) <= 1)
+        {
+            speed = Random.Range(FlockManager.FM.minSpeed, FlockManager.FM.maxSpeed);
+        }
+
         ApplyFlockRules();
         this.transform.Translate(0, 0, speed * Time.deltaTime);
     }
@@ -61,7 +66,8 @@ public class Flock : MonoBehaviour
             // take average of vcentre, vavoid and flock speed if groupsize is greater than 0
             if (groupSize > 0)
             {
-                vcentre = vcentre / groupSize;
+                // blend in a goal position to the vcentre vector
+                vcentre = vcentre / groupSize + (FlockManager.FM.goalPos - this.transform.position);
                 gSpeed = gSpeed / groupSize;
 
                 // set local speed to the average speed of the group but capped to FM max speed
