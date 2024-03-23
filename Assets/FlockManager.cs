@@ -17,7 +17,7 @@ public class FlockManager : MonoBehaviour
     public float maxSpeed;
     [Range(1.0f, 10.0f)]
     public float neighbourDistance;
-    [Range(1.0f, 5.0f)]
+    [Range(0.05f, 0.2f)]
     public float rotationSpeed;
     [Range(0.5f, 2.0f)]
     public float avoidDistance;

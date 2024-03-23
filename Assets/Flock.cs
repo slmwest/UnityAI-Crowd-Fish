@@ -48,7 +48,7 @@ public class Flock : MonoBehaviour
                 // if too close, avoid neighbouring fish and influence vavoid vector
                 if (nDistance < FlockManager.FM.avoidDistance)
                 {
-                    vavoid += this.transform.position - go.transform.position; // opposite direction to neighbouring fish
+                    vavoid = vavoid + (this.transform.position - go.transform.position); // opposite direction to neighbouring fish
                 }
 
                 // find speed of neighbouring fish and use to adjust speed of this fish
