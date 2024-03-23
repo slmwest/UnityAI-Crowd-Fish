@@ -52,7 +52,6 @@ public class FlockManager : MonoBehaviour
             {
                 toInstantiate = fishPrefab;
             }
-
             allFish[i] = Instantiate(toInstantiate, pos, Quaternion.identity);
 
         }

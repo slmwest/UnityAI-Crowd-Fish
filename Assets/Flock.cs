@@ -6,22 +6,18 @@ public class Flock : MonoBehaviour
 {
     float speed;
     bool turning = false;
-    Bounds b;
-
 
     // Start is called before the first frame update
     void Start()
     {
         speed = Random.Range(FlockManager.FM.minSpeed, FlockManager.FM.maxSpeed);
-
-        // set up a bounds b, e.g. a prism twice the size of swimLimits centered on the FlockManager
-        b = new Bounds(FlockManager.FM.transform.position, FlockManager.FM.swimLimits * 2);
     }
 
     // Update is called once per frame
     void Update()
     {
-        // check if this fish is in bounds of b, a prism twice the size of swimLimits. if no, set turning to true
+        // check if this fish is in bounds of b, a prism 3x the size of swimLimits. if no, set turning to true
+        Bounds b = new Bounds(FlockManager.FM.transform.position, FlockManager.FM.swimLimits * 4);
         if (!b.Contains(this.transform.position))
         {
             turning = true;
@@ -31,10 +27,11 @@ public class Flock : MonoBehaviour
             turning = false;
         }   
 
-        // if turning, adjust to return to centre of flock position
+        // if turning, adjust to return to centre of flock position and do not allow other rules to be applied
         if (turning)
         {
             ReturnToFlock();
+            Debug.Log("Out of bounds");
         }
         else
         {
@@ -45,7 +42,7 @@ public class Flock : MonoBehaviour
             }
 
             // Apply flocking rules with a certain probability to reduce load
-            if (Random.Range(0, 100) <= 10)
+            if (Random.Range(0, 60) <= 10)
             {
                 ApplyFlockRules();
             }
@@ -64,7 +61,7 @@ public class Flock : MonoBehaviour
         Vector3 direction = FlockManager.FM.transform.position - this.transform.position;
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
                                                    Quaternion.LookRotation(direction),
-                                                   FlockManager.FM.rotationSpeed * Time.deltaTime);
+                                                   FlockManager.FM.rotationSpeed * Time.deltaTime * 5);
     }
 
     /// <summary>
