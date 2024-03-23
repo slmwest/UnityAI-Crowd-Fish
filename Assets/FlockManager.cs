@@ -7,6 +7,7 @@ public class FlockManager : MonoBehaviour
 {
     public static FlockManager FM; // Singleton instance of FlockManager
     public GameObject fishPrefab;
+    public GameObject fishPrefab2;
     public int numFish = 20;
     public GameObject[] allFish;
     public Vector3 swimLimits = new Vector3(5, 5, 5);
@@ -41,7 +42,18 @@ public class FlockManager : MonoBehaviour
                                                                 Random.Range(-swimLimits.y, swimLimits.y),
                                                                 Random.Range(-swimLimits.z, swimLimits.z));
 
-            allFish[i] = Instantiate(fishPrefab, pos, Quaternion.identity);
+            // set toInstantiate to fishPrefab or fishPrefab2 with a certain probability
+            GameObject toInstantiate;
+            if (Random.Range(0, 10) <= 3)
+            {
+                toInstantiate = fishPrefab2;
+            }
+            else
+            {
+                toInstantiate = fishPrefab;
+            }
+
+            allFish[i] = Instantiate(toInstantiate, pos, Quaternion.identity);
 
         }
 
