@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FlockManager : MonoBehaviour
@@ -55,9 +56,10 @@ public class FlockManager : MonoBehaviour
         // Update the goal position of the flock with a certain probability
         if (Random.Range(0, changeGoalPosRate) <= 1)
         {
-            goalPos = new Vector3(Random.Range(-swimLimits.x, swimLimits.x),
-                                Random.Range(-swimLimits.y, swimLimits.y),
-                                Random.Range(-swimLimits.z, swimLimits.z));
+            // the new goalPos will still be within swimLimits, we are not updating position of this GO!
+            goalPos = this.transform.position + new Vector3(Random.Range(-swimLimits.x, swimLimits.x),
+                                                Random.Range(-swimLimits.y, swimLimits.y),
+                                                Random.Range(-swimLimits.z, swimLimits.z));
         }
     }
 }

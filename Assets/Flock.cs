@@ -5,29 +5,71 @@ using UnityEngine;
 public class Flock : MonoBehaviour
 {
     float speed;
+    bool turning = false;
+    Bounds b;
+
 
     // Start is called before the first frame update
     void Start()
     {
         speed = Random.Range(FlockManager.FM.minSpeed, FlockManager.FM.maxSpeed);
+
+        // set up a bounds b, e.g. a prism twice the size of swimLimits centered on the FlockManager
+        b = new Bounds(FlockManager.FM.transform.position, FlockManager.FM.swimLimits * 2);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Random.Range(0, FlockManager.FM.changeSpeedRate) <= 1)
+        // check if this fish is in bounds of b, a prism twice the size of swimLimits. if no, set turning to true
+        if (!b.Contains(this.transform.position))
         {
-            speed = Random.Range(FlockManager.FM.minSpeed, FlockManager.FM.maxSpeed);
+            turning = true;
         }
-        
-        // Apply flocking rules with a certain probability to reduce load
-        if (Random.Range(0, 100) <= 10)
+        else
         {
-            ApplyFlockRules();
+            turning = false;
+        }   
+
+        // if turning, adjust to return to centre of flock position
+        if (turning)
+        {
+            ReturnToFlock();
         }
+        else
+        {
+            // change speed with a certain probability
+            if (Random.Range(0, FlockManager.FM.changeSpeedRate) <= 1)
+            {
+                speed = Random.Range(FlockManager.FM.minSpeed, FlockManager.FM.maxSpeed);
+            }
+
+            // Apply flocking rules with a certain probability to reduce load
+            if (Random.Range(0, 100) <= 10)
+            {
+                ApplyFlockRules();
+            }
+        }
+
+        // move forward
         this.transform.Translate(0, 0, speed * Time.deltaTime);
     }
 
+    
+    /// <summary>
+    /// Sets destination of this fish back to the center of the flock by adjusting its rotation.
+    /// </summary>
+    void ReturnToFlock()
+    {
+        Vector3 direction = FlockManager.FM.transform.position - this.transform.position;
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
+                                                   Quaternion.LookRotation(direction),
+                                                   FlockManager.FM.rotationSpeed * Time.deltaTime);
+    }
+
+    /// <summary>
+    /// Apply three rules of flocking: cohesion, separation and alignment.
+    /// </summary>
     void ApplyFlockRules()
     {
         GameObject[] gos;
